@@ -12,5 +12,5 @@ runs:
   using: "composite"
   steps:
   - name: Set version to SNAPSHOT
-    run: mvn versions:set -DnewVersion=${{ inputs.tag }}-${{ inputs.ambiente }}
+    run: mvn versions:set -DnewVersion=${{ inputs.tag }}-${{ inputs.version }}
     shell: bash
