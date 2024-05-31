@@ -7,16 +7,29 @@ on:
  
 env:
   AMBIENTE: ${{ (github.ref == 'refs/heads/main' && 'dev') }} # || (github.ref == 'refs/heads/qa' && 'qa') }} || (github.ref == 'refs/heads/qa' && 'pro') }}
-  # NAMESPACE: microservice-${{ env.AMBIENTE }}
-  # CLUSTER_NAME: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-AKS2
-  # CLUSTER_RESOURCE_GROUP: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-ALL-RG
+
 
 jobs:
+
+  setup-vm:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        maven: [ '3.9.6' ]
+        java: ['17']
+    steps:
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.2.1
+        with:
+          java-version: ${{ matrix.java }}
+          maven-version: ${{ matrix.maven }}
+
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
+    needs: setup-vm
 
     steps:
 
@@ -29,10 +42,16 @@ jobs:
         with:
           ambiente: ${{ env.AMBIENTE }}
 
+      
+      - name: Set version
+        id: version
+        uses: ./.github/workflows/version
+
       - name: Use environment variables
         run: |
           echo "AMBIENTE: ${{ env.AMBIENTE }}"
           echo "NAMESPACE: ${{ env.namespace }}"
           echo "CLUSTER_NAME: ${{ env.cluster_name }}"
           echo "CLUSTER_RESOURCE_GROUP: ${{ env.cluster_resource_group }}"
+          echo "VERSION: ${{ env.VERSION }}"
         shell: bash

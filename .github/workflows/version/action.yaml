@@ -1,0 +1,24 @@
+name: 'Version Image'
+description: 'Get Image Version from pom.xml'
+outputs:
+  version:
+    description: "version from pom.xml"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get version from pom.xml
+      id: version
+      run: |
+        echo "version=$(mvn -q \
+          -Dexec.executable=echo \
+          -Dexec.args='${project.version}' \
+          --non-recursive \
+          exec:exec)" >> $GITHUB_ENV
+      shell: bash
+
+
+    - id: output-vars
+      run: |
+        echo "version=${{ env.version }}" >> $GITHUB_OUTPUT
+      shell: bash
