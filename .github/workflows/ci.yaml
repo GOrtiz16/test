@@ -29,8 +29,10 @@ jobs:
         with:
           ambiente: ${{ env.AMBIENTE }}
 
-      - run: |
+      - name: Use environment variables
+        run: |
           echo "AMBIENTE: ${{ env.AMBIENTE }}"
-          echo "NAMESPACE: ${{ steps.vars.outputs.namespace }}"
-          echo "CLUSTER_NAME: ${{ steps.vars.outputs.cluster_name }}"
-          echo "CLUSTER_RESOURCE_GROUP: ${{ steps.vars.outputs.cluster_resource_group }}"
+          echo "NAMESPACE: ${{ env.namespace }}"
+          echo "CLUSTER_NAME: ${{ env.cluster_name }}"
+          echo "CLUSTER_RESOURCE_GROUP: ${{ env.cluster_resource_group }}"
+        shell: bash

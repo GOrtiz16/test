@@ -14,8 +14,15 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: |
-        echo "::set-output name=namespace::microservice-${{ inputs.ambiente }}"
-        echo "::set-output name=cluster_name::AZ-EASTUS-BSP-${{ inputs.ambiente }}-NEWOBW-AKS2"
-        echo "::set-output name=cluster_resource_group::AZ-EASTUS-BSP-${{ inputs.ambiente }}-NEWOBW-ALL-RG"
+    - id: set-vars
+      run: |
+        echo "namespace=microservice-${{ inputs.ambiente }}" >> $GITHUB_ENV
+        echo "cluster_name=AZ-EASTUS-BSP-${{ inputs.ambiente }}-NEWOBW-AKS2" >> $GITHUB_ENV
+        echo "cluster_resource_group=AZ-EASTUS-BSP-${{ inputs.ambiente }}-NEWOBW-ALL-RG" >> $GITHUB_ENV
+      shell: bash
+    - id: output-vars
+      run: |
+        echo "namespace=${{ env.namespace }}" >> $GITHUB_OUTPUT
+        echo "cluster_name=${{ env.cluster_name }}" >> $GITHUB_OUTPUT
+        echo "cluster_resource_group=${{ env.cluster_resource_group }}" >> $GITHUB_OUTPUT
       shell: bash
