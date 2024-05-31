@@ -1,0 +1,21 @@
+name: CI Workflow
+on:
+  workflow_dispatch:
+    branches:
+      - feature/devops
+ 
+env:
+  AMBIENTE: ${{ (github.ref == 'refs/heads/feature/devops' && 'dev') # || (github.ref == 'refs/heads/qa' && 'qa') }} || (github.ref == 'refs/heads/qa' && 'pro') }}
+  NAMESPACE: microservice-${{ env.AMBIENTE }}
+  CLUSTER_NAME: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-AKS2
+  CLUSTER_RESOURCE_GROUP: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-ALL-RG
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "AMBIENTE: ${{ env.AMBIENTE }}"
+          echo "NAMESPACE: ${{ env.NAMESPACE }}"
+          echo "CLUSTER_NAME: ${{ env.CLUSTER_NAME }}"}
+          echo "CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}"
