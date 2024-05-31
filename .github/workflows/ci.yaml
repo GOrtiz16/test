@@ -17,11 +17,15 @@ jobs:
     defaults:
       run:
         shell: bash
-    env:
-      NAMESPACE: microservice-${{ env.NAMESPACE }}
-      CLUSTER_NAME: AZ-EASTUS-BSP-${{ env.CLUSTER_NAME }}-NEWOBW-AKS2
-      CLUSTER_RESOURCE_GROUP: AZ-EASTUS-BSP-${{ env.CLUSTER_RESOURCE_GROUP }}-NEWOBW-ALL-RG
+
     steps:
+
+      - name: Set environment variables
+        id: vars
+        uses: .github/workflows/variables/variables.yaml
+        with:
+          ambiente: ${{ env.AMBIENTE }}
+
       - run: |
           echo "AMBIENTE: ${{ env.AMBIENTE }}"
           echo "NAMESPACE: ${{ env.NAMESPACE }}"

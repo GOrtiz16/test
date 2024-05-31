@@ -1,0 +1,21 @@
+name: 'Set environment variables'
+description: 'Set environment variables for the workflow'
+inputs:
+  ambiente:
+    description: 'Environment'
+    required: true
+outputs:
+  namespace:
+    description: "Namespace"
+  cluster_name:
+    description: "Cluster name"
+  cluster_resource_group:
+    description: "Cluster resource group"
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        echo "::set-output name=namespace::microservice-${{ inputs.ambiente }}"
+        echo "::set-output name=cluster_name::AZ-EASTUS-BSP-${{ inputs.ambiente }}-NEWOBW-AKS2"
+        echo "::set-output name=cluster_resource_group::AZ-EASTUS-BSP-${{ inputs.ambiente }}-NEWOBW-ALL-RG"
+      shell: bash
