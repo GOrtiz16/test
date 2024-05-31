@@ -6,7 +6,7 @@ on:
       - main
  
 env:
-  AMBIENTE: ${{ (github.ref == 'refs/heads/feature/devops' && 'dev') # || (github.ref == 'refs/heads/qa' && 'qa') }} || (github.ref == 'refs/heads/qa' && 'pro') }}
+  AMBIENTE: ${{ (github.ref == 'refs/heads/main' && 'dev') }} # || (github.ref == 'refs/heads/qa' && 'qa') }} || (github.ref == 'refs/heads/qa' && 'pro') }}
   NAMESPACE: microservice-${{ env.AMBIENTE }}
   CLUSTER_NAME: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-AKS2
   CLUSTER_RESOURCE_GROUP: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-ALL-RG
