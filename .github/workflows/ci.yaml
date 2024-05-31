@@ -7,9 +7,9 @@ on:
  
 env:
   AMBIENTE: ${{ (github.ref == 'refs/heads/main' && 'dev') }} # || (github.ref == 'refs/heads/qa' && 'qa') }} || (github.ref == 'refs/heads/qa' && 'pro') }}
-  NAMESPACE: microservice-${{ env.AMBIENTE }}
-  CLUSTER_NAME: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-AKS2
-  CLUSTER_RESOURCE_GROUP: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-ALL-RG
+  # NAMESPACE: microservice-${{ env.AMBIENTE }}
+  # CLUSTER_NAME: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-AKS2
+  # CLUSTER_RESOURCE_GROUP: AZ-EASTUS-BSP-${{ env.AMBIENTE }}-NEWOBW-ALL-RG
 
 jobs:
   build:
@@ -17,6 +17,10 @@ jobs:
     defaults:
       run:
         shell: bash
+    env:
+      NAMESPACE: microservice-${{ env.NAMESPACE }}
+      CLUSTER_NAME: AZ-EASTUS-BSP-${{ env.CLUSTER_NAME }}-NEWOBW-AKS2
+      CLUSTER_RESOURCE_GROUP: AZ-EASTUS-BSP-${{ env.CLUSTER_RESOURCE_GROUP }}-NEWOBW-ALL-RG
     steps:
       - run: |
           echo "AMBIENTE: ${{ env.AMBIENTE }}"
