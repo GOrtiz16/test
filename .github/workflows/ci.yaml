@@ -57,7 +57,7 @@ jobs:
         shell: bash
 
       - name: Set version in pom.xml
-        id: vars
+        id: version
         uses: ./.github/workflows/version
         with:
           version: ${{ env.VERSION }}
