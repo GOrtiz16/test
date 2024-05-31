@@ -25,7 +25,7 @@ jobs:
 
       - name: Set environment variables
         id: vars
-        uses: ./variables/variables.yaml
+        uses: ./variables
         with:
           ambiente: ${{ env.AMBIENTE }}
 
