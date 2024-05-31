@@ -7,7 +7,7 @@ on:
  
 env:
   AMBIENTE: ${{ (github.ref == 'refs/heads/main' && 'dev') }} # || (github.ref == 'refs/heads/qa' && 'qa') }} || (github.ref == 'refs/heads/qa' && 'pro') }}
-
+  VERSION: ${{ (github.ref == 'refs/heads/main' && 'SNAPSHOT') }}
 
 jobs:
 
@@ -43,9 +43,9 @@ jobs:
           ambiente: ${{ env.AMBIENTE }}
 
       
-      - name: Set version
-        id: version
-        uses: ./.github/workflows/version
+      - name: Set tag
+        id: tag
+        uses: ./.github/workflows/acr-tag
 
       - name: Use environment variables
         run: |
@@ -53,5 +53,15 @@ jobs:
           echo "NAMESPACE: ${{ env.namespace }}"
           echo "CLUSTER_NAME: ${{ env.cluster_name }}"
           echo "CLUSTER_RESOURCE_GROUP: ${{ env.cluster_resource_group }}"
-          echo "VERSION: ${{ env.version }}"
+          echo "TAG: ${{ env.tag }}"
         shell: bash
+
+      - name: Set version in pom.xml
+        id: vars
+        uses: ./.github/workflows/version
+        with:
+          version: ${{ env.VERSION }}
+          tag: ${{ env.tag }}
+      
+      - name: leer pom.xml
+        run: cat pom.xml

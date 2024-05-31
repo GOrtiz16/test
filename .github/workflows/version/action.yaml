@@ -1,24 +1,16 @@
-name: 'Version Image'
-description: 'Get Image Version from pom.xml'
-outputs:
+name: 'Version Pom.xml'
+description: 'Set Version in pom.xml'
+inputs:
   version:
-    description: "version from pom.xml"
+    description: 'Version'
+    required: true
+  tag:
+    description: 'Tag'
+    required: true
 
 runs:
   using: "composite"
   steps:
-    - name: Get version from pom.xml
-      id: version
-      run: |
-        echo "version=$(mvn -q \
-          -Dexec.executable=echo \
-          -Dexec.args='${project.version}' \
-          --non-recursive \
-          exec:exec)" >> $GITHUB_ENV
-      shell: bash
-
-
-    - id: output-vars
-      run: |
-        echo "version=${{ env.version }}" >> $GITHUB_OUTPUT
-      shell: bash
+  - name: Set version to SNAPSHOT
+    run: mvn versions:set -DnewVersion=${{ inputs.tag }}-${{ inputs.ambiente }}
+    shell: bash
