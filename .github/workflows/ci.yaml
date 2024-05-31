@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
     branches:
       - feature/devops
+      - main
  
 env:
   AMBIENTE: ${{ (github.ref == 'refs/heads/feature/devops' && 'dev') # || (github.ref == 'refs/heads/qa' && 'qa') }} || (github.ref == 'refs/heads/qa' && 'pro') }}
@@ -13,6 +14,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - run: |
           echo "AMBIENTE: ${{ env.AMBIENTE }}"
