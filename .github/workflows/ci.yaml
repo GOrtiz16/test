@@ -53,5 +53,5 @@ jobs:
           echo "NAMESPACE: ${{ env.namespace }}"
           echo "CLUSTER_NAME: ${{ env.cluster_name }}"
           echo "CLUSTER_RESOURCE_GROUP: ${{ env.cluster_resource_group }}"
-          echo "VERSION: ${{ env.VERSION }}"
+          echo "VERSION: ${{ env.version }}"
         shell: bash
