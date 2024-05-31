@@ -20,9 +20,12 @@ jobs:
 
     steps:
 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Set environment variables
         id: vars
-        uses: ./variables
+        uses: ./variables/variables.yaml
         with:
           ambiente: ${{ env.AMBIENTE }}
 
